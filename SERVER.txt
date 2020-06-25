@@ -1,0 +1,6 @@
+----------unzip trên WInscp
+unzip -o example.zip
+unzip -o Sitters_project_19062020.zip
+
+----------thao tác với thư mục trên linux
+rm -R tenthumuc

@@ -1,0 +1,49 @@
+--------------postgres------------------------
+Postgress cmd
+psql -U pgadmin -l
+psql -h localhost -d doctor_v2 -U postgres -f C:\Pro\DropDatabaseServer\DB_30032020\dbexport.sql
+
+--------server---------
+pg_dump -U postgres doctor_v2 > /home/.sites/site1/web/doctor/v2/doc/dbexport.sql
+
+psql -U postgres doctor_v2 < /home/.sites/site1/web/doctor/v2/doc/update.sql
+
+====product=========
+pg_dump -U postgres doctor_biz > /home/.sites/site32/web/db_backup/dbexport.sql
+
+------local-------
+pg_dump -U postgres doctor_v2 > C:\Pro/dbexport07042020.sql
+
+===local product====
+--export db
+pg_dump -U postgres doctor_biz > C:\Pro/dbexport21052020.sql
+--import db
+psql -h localhost -d doctor_pro -U postgres -f C:\Pro\DropDatabaseServer\PRO_DB20052020\dbexport.sql
+
+
+=========
+psql -h localhost -d db_tmp_new -U postgres -f C:\Pro\DB\user_tmp.sql
+
+--------------postgres------------------------
+
+================mở public postgres local=================
+
+b1: mở port 5432 và bỏ tường lửa
+b2: update file PostgreSQL\10\data\pg_hba.conf thành
+# IPv4 local connections:
+host    all             all             0.0.0.0/0            md5
+
+================mở public postgres local=================
+
+pDB 153.126.149.63
+Q90ivt1lk7q9NsPZCmX1
+
+
+160.16.69.217
+is_kanazawa
+
+gNauOBSM
+
+db
+v6yYDyJ3
+doctor_biz

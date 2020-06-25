@@ -1,0 +1,48 @@
+#-------------------------------------------------------------------------------------------------------------------------
+#General Conffig
+#-------------------------------------------------------------------------------------------------------------------------
+#1. First create a group (eg: git-users)
+#Command: 
+sudo groupadd git-users
+#2. Create a folder for git root (eg: /var/gitmp/)
+#Command: 
+sudo mkdir /var/gitmp/
+#3. Make group Ownership for git root folder
+#Command:
+sudo chgrp -R git-users /var/gitmp/
+#-------------------------------------------------------------------------------------------------------------------------
+#Create New Project, Team, User
+#-------------------------------------------------------------------------------------------------------------------------
+#New Project:
+#4. Create a repository (eg: NewGraduate)
+#Command: 
+sudo git init --bare /var/gitmp/NewGraduate
+#5. Create a group for access this Repository (eg: Team2)
+#Command: 
+sudo groupadd Team2
+#6. Create a User if not exited (eg: bloodtear) 
+#Command: 
+sudo adduser bloodtear && sudo passwd -d bloodtear
+#7. Add user to group on step 1 (git-users) and step 5 (Team2)
+#Command:  
+sudo usermod -a -G git-users bloodtear && sudo usermod -a -G Team2 bloodtear
+#8. Create ssh key and permission user can login with ssh
+#Command:
+sudo mkdir /home/bloodtear/.ssh
+sudo ssh-keygen -t rsa -b 2048 -f /home/bloodtear/.ssh/id_rsa
+#Transfer the private key file to your computer.
+#sudo -u [user name] ssh-copy-id ~/.ssh/.ssh.pub
+#*If you can't use the ssh-copy-id command, rename the id_rsa.pub file to authorized_keys.
+sudo cp /home/bloodtear/.ssh/id_rsa.pub /home/bloodtear/.ssh/authorized_keys
+#set permission
+sudo chmod 700 /home/bloodtear/.ssh/
+sudo chmod 600 /home/bloodtear/.ssh/authorized_keys
+sudo chown -R bloodtear:bloodtear /home/bloodtear/.ssh/
+#9. Config user only run command git
+#Command: 
+sudo chsh bloodtear -s $(which git-shell)
+#-------------------------------------------------------------------------------------------------------------------------
+#Check config from git bash
+#-------------------------------------------------------------------------------------------------------------------------
+#Testing:
+git clone ssh://bloodtear@153.127.35.51/var/gitmp/NewGraduate/
