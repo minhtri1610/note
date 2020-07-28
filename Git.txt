@@ -1,3 +1,5 @@
+http://mpv.servehttp.com/GitServer/Repository/Index
+
 ------GIT SERVER-----
 ./blood_script.sh hoang_minh_thuan teamJP SitterProject
 
