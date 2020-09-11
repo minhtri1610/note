@@ -33,6 +33,8 @@ b2: update file PostgreSQL\10\data\pg_hba.conf thành
 # IPv4 local connections:
 host    all             all             0.0.0.0/0            md5
 
+https://www.postgresql.org/docs/9.3/auth-pg-hba-conf.html
+
 ================mở public postgres local=================
 
 pDB 153.126.149.63

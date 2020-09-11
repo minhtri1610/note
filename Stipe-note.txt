@@ -1,0 +1,123 @@
+- Thêm chức năng edit lại thẻ ngân hàng
+phần edit thẻ ngân hàng thì thêm ở vị trí nào
+
+= tìm hiểu api get thông tin thẻ ngân hàng
+= tìm hiểu api edit thông tin thẻ ngân hàng
+https://stripe.com/docs/api/customers/update
+
+https://stripe.com/docs/connect/statement-descriptors
+https://stripe.com/docs/connect/explore-connect-guide
+
+- chức năng cancel sau khi booking chưa rõ ràng, chưa biết đặt ở đâu _ hỏi lại phần cancel
+
+lưu thông tin thẻ để thanh toán về sau
+https://stripe.com/docs/payments/save-and-reuse
+
+
+-- 30 ngày kể từ ngày cung cấp dịch vụ?
+giả sử ngày đi làm là ngày 30/08/2020 vậy thì tới ngày 30/09/2020 mới nhận lương hay là ngày 30/08/2020 là chuyển lương
+
+-- cách chuyển khoản theo group để giảm phí stripe
+https://stripe.com/docs/connect/charges-transfers
+
+
+---Dùng transfer group để giảm thiểu số phí cho 1 group chuyển khoảng
+
+// Set your secret key. Remember to switch to your live secret key in production!
+// See your keys here: https://dashboard.stripe.com/account/apikeys
+\Stripe\Stripe::setApiKey('sk_test_51HH3fxEkyn0XMKpG77QqVE25YW8wxLTAhjbl2rykPI4KHVsy39d2QxF9v37hRM4wpCJVwVPRcr6fNmqigrDzPihD00Gn0FvEI8');
+
+// Create a PaymentIntent:
+$paymentIntent = \Stripe\PaymentIntent::create([
+  'amount' => 10000,
+  'currency' => 'jpy',
+  'payment_method_types' => ['card'],
+  'transfer_group' => '{ORDER10}',
+]);
+
+// Create a Transfer to a connected account (later):
+$transfer = \Stripe\Transfer::create([
+  'amount' => 7000,
+  'currency' => 'jpy',
+  'destination' => '{{CONNECTED_STRIPE_ACCOUNT_ID}}',
+  'transfer_group' => '{ORDER10}',
+]);
+
+// Create a second Transfer to another connected account (later):
+$transfer = \Stripe\Transfer::create([
+  'amount' => 2000,
+  'currency' => 'jpy',
+  'destination' => '{{OTHER_CONNECTED_STRIPE_ACCOUNT_ID}}',
+  'transfer_group' => '{ORDER10}',
+]);
+
+// danh sách card test theo quốc gia
+https://stripe.com/docs/testing#international-cards
+
+
+//vấn đề pending khi chuyển tiền
+https://stackoverflow.com/questions/36884540/how-much-time-does-it-take-for-pending-payments-to-be-converted-into-the-stripe
+
+//vấn đề hoàn tiền
+
+https://stripe.com/docs/refunds#:~:text=There%20are%20no%20fees%20to,later%2C%20depending%20upon%20the%20bank.
+
+Bạn có thể hoàn trả các khoản phí đã thanh toán cho tài khoản của mình, toàn bộ hoặc một phần. 
+Tiền hoàn lại sử dụng số dư Stripe có sẵn của bạn — điều này không bao gồm bất kỳ số dư nào đang chờ xử lý. 
+Nếu số dư khả dụng của bạn không bao gồm số tiền hoàn lại, Stripe sẽ ghi nợ số tiền còn lại từ tài khoản ngân hàng của bạn.
+
+Nếu Stripe không thể ghi nợ số tiền còn lại từ tài khoản ngân hàng của bạn, tiền hoàn lại của bạn có thể chuyển sang trạng thái chờ xử lý cho đến khi bạn thêm tiền vào số dư Stripe của mình.
+Nếu khoản phí ban đầu được chuyển đổi tiền tệ , thì số tiền được hoàn lại sẽ chuyển đổi trở lại theo quy trình tương tự. 
+
+Không có phí để hoàn lại một khoản phí, nhưng các khoản phí từ khoản phí ban đầu sẽ không được trả lại.
+
+Chúng tôi gửi yêu cầu hoàn lại tiền đến ngân hàng hoặc công ty phát hành thẻ của khách hàng của bạn. Khách hàng của bạn coi khoản tiền hoàn lại là một khoản tín dụng sau đó khoảng 5-10 ngày làm việc , tùy thuộc vào ngân hàng. 
+
+Sau khi đã phát hành, khoản tiền hoàn lại không thể bị hủy bỏ. Không thể tranh chấp và bồi hoàn đối với các khoản phí thẻ tín dụng đã được hoàn lại đầy đủ.
+
+Chúng tôi cũng sẽ gửi email cho khách hàng của bạn để thông báo cho họ về khoản tiền hoàn lại, nếu tất cả các điều kiện sau được áp dụng:
+
+Khoản phí ban đầu được tạo trên một Customerđối tượng trong tài khoản Stripe của bạn
+Đối Customertượng có một địa chỉ email được lưu trữ
+Bạn có Email khách hàng hoàn lại tiền kích hoạt
+
+Phát hành tiền hoàn lại
+Tiền hoàn lại có thể được phát hành qua APIhoặc Trang tổng quan và được xử lý ngay lập tức. Sau khi đã phát hành, khoản tiền hoàn lại không thể bị hủy bỏ.
+
+Bạn có thể hoàn lại nhiều hơn một khoản phí nhưng bạn không thể hoàn lại tổng số tiền lớn hơn số tiền phí ban đầu.
+
+\Stripe\Stripe::setApiKey('sk_test_51HH3fxEkyn0XMKpG77QqVE25YW8wxLTAhjbl2rykPI4KHVsy39d2QxF9v37hRM4wpCJVwVPRcr6fNmqigrDzPihD00Gn0FvEI8');
+
+$re = \Stripe\Refund::create([
+  'amount' => 1000,
+  'payment_intent' => 'pi_Aabcxyz01aDfoo',
+]);
+
+
+//note về vấn đề thu phí của Stripe
+= nếu số tiền chuyển đang trong trạng thái pending thì khi refund thì tài khoản không bị trừ phí
+== chưa test trong trường hợp tiền đã vào trạng thái availabe
+
+//Số dư tài khoản  test
+pending: 70926
+availabe: 2237
+
+
+//kiểm tra số dư
+https://dashboard.stripe.com/test/balance
+
+
+transfer api
+https://stripe.com/docs/api/transfers/create
+
+
+
+availabe: 11517
+pending: 110346
+
+availabe: 20797
+
+
+-- get list cần transfer
+-- thiết lập crontab
+-- 

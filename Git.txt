@@ -13,7 +13,6 @@ git clone ssh://tran_minh_tri@153.127.35.51/var/gitmp/SittersProject/
 ------ di chuyển khóa
 
 sudo cp /home/ho_viet_binh/.ssh/id_rsa /home/mpv/ppk/ho_viet_binh1
-
 sudo cp /home/ho_viet_binh/.ssh/id_rsa /home/$current_user/ppk/ho_viet_binh1
 
 
