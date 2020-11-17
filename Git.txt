@@ -30,8 +30,8 @@ git remote rm origin
 git remote add origin git@newserver:newproject.git
 git push --mirror new
 
-
 cat /etc/group | grep JP <- lấy cái nào có chữ JP
 xét 1 thư mục có 2 nhóm quyền vào dự án
-setfacl -R -m team1:rwx /var/gitmp/ten_du_an
-setfacl -R -m team2:rwx /var/gitmp/ten_du_an
+setfacl -R -m g:tengroup:rwx /var/gitmp/ten_du_an
+//sau khi thực hiện lệnh trên có thể bị lỗi permission git push nhánh mới
+https://serverfault.com/questions/26954/how-do-i-share-a-git-repository-with-multiple-users-on-a-machine
