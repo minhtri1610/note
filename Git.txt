@@ -41,4 +41,17 @@ xóa nhóm phụ của 1 folder, hoặc file
 
 setfacl -x g:ten_nhom /duong_dan_thu_mục hoặc duong dẫn file
 
+quy trình add git bằng tay ở server công ty
 
+chạy script blood_script 
+nếu add group phụ vào 1 repo
+
+Tạo group phụ bằng câu lệnh
+sudo groupadd $group_name
+
+thêm user vào group
+sudo usermod -a -G $git_group $user_name
+sudo usermod -a -G $group_name $user_name
+
+add group phụ vào repo
+sudo setfacl -R -m g:$group_name:rwX $git_root_folder$repo_name
