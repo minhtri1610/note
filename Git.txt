@@ -58,3 +58,26 @@ Sudo setfacl -Rdm g:groupnamehere:rwx $git_root_folder$repo_name
 Sudo setfacl -Rm g:groupnamehere:rwx $git_root_folder$repo_name
 
 Lệnh đầu tiên, dành cho các mục mới (do đó là d), lệnh thứ hai, dành cho các mục cũ/hiện có trong thư mục
+
+
+cross git lab
+-tạo nhánh mới từ git server mình
+- git remote add gitlab https://gitlab.com/epsminhtri/testtri.git
+
+# fetch the master branch contents
+git fetch gitlab master
+
+# and now set upstream
+git branch --set-upstream-to=gitlab/master
+hoặc
+git branch -u gitlab master
+
+# confirm upstream branch
+git rev-parse --abbrev-ref --symbolic-full-name @{u}//cai nay ko can thiet
+# gitlab/master
+
+# confirm origin//check lại remote xem đã có chưa
+git remote -v
+
+git pull origin master --allow-unrelated-histories//trường hợp pull hoặc merger chéo
+git merge origin master --allow-unrelated-histories
