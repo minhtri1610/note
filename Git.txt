@@ -54,8 +54,8 @@ sudo usermod -a -G $git_group $user_name
 sudo usermod -a -G $group_name $user_name
 
 add group phụ vào repo
-Sudo setfacl -Rdm g:groupnamehere:rwx $git_root_folder$repo_name
-Sudo setfacl -Rm g:groupnamehere:rwx $git_root_folder$repo_name
+Sudo setfacl -Rdm g:groupnamehere:rwX $git_root_folder$repo_name
+Sudo setfacl -Rm g:groupnamehere:rwX $git_root_folder$repo_name
 
 Lệnh đầu tiên, dành cho các mục mới (do đó là d), lệnh thứ hai, dành cho các mục cũ/hiện có trong thư mục
 
